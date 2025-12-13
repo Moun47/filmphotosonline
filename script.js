@@ -9,27 +9,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 加载链接
     await loadUrls();
     
-    // 添加增减按钮事件监听器
-    const decreaseBtn = document.getElementById('decreaseBtn');
-    const increaseBtn = document.getElementById('increaseBtn');
-    const countInput = document.getElementById('count');
-    
-    decreaseBtn.addEventListener('click', () => {
-        let currentValue = parseInt(countInput.value) || 1;
-        if (currentValue > 1) {
-            countInput.value = currentValue - 1;
-        }
-    });
-    
-    increaseBtn.addEventListener('click', () => {
-        let currentValue = parseInt(countInput.value) || 1;
-        countInput.value = currentValue + 1;
-    });
-    
     // 添加随机打开按钮点击事件
     openBtn.addEventListener('click', () => {
-        const count = parseInt(countInput.value) || 1;
-        openRandomUrls(count);
+        openRandomUrl();
     });
 });
 
@@ -75,8 +57,8 @@ async function loadUrls() {
     }
 }
 
-// 随机打开指定数量的链接
-function openRandomUrls(count) {
+// 随机打开一个链接
+function openRandomUrl() {
     const status = document.getElementById('status');
     const openBtn = document.getElementById('openBtn');
     
@@ -87,37 +69,19 @@ function openRandomUrls(count) {
         return;
     }
     
-    // 确保数量至少为1
-    if (count < 1) {
-        status.textContent = '请输入至少为1的数字';
-        status.className = 'status error';
-        return;
-    }
-    
     // 禁用按钮，防止重复点击
     openBtn.disabled = true;
     
     try {
-        // 随机选择不重复的链接
-        const selectedUrls = [];
-        const urlsCopy = [...doubanUrls];
+        // 随机选择一个链接
+        const randomIndex = Math.floor(Math.random() * doubanUrls.length);
+        const randomUrl = doubanUrls[randomIndex];
         
-        for (let i = 0; i < count && urlsCopy.length > 0; i++) {
-            const randomIndex = Math.floor(Math.random() * urlsCopy.length);
-            selectedUrls.push(urlsCopy[randomIndex]);
-            urlsCopy.splice(randomIndex, 1);
-        }
-        
-        // 在新标签页中打开链接（处理浏览器安全限制）
-        // 第一个链接直接打开，后续链接使用setTimeout延迟打开
-        selectedUrls.forEach((url, index) => {
-            setTimeout(() => {
-                window.open(url, '_blank');
-            }, index * 100); // 每个链接间隔100毫秒
-        });
+        // 在新标签页中打开链接
+        window.open(randomUrl, '_blank');
         
         // 显示成功信息
-        status.textContent = `已成功打开 ${selectedUrls.length} 个随机剧照页面`;
+        status.textContent = '已成功打开随机剧照页面';
         status.className = 'status success';
         
     } catch (error) {
