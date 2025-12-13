@@ -108,9 +108,12 @@ function openRandomUrls(count) {
             urlsCopy.splice(randomIndex, 1);
         }
         
-        // 在新标签页中打开链接
-        selectedUrls.forEach(url => {
-            window.open(url, '_blank');
+        // 在新标签页中打开链接（处理浏览器安全限制）
+        // 第一个链接直接打开，后续链接使用setTimeout延迟打开
+        selectedUrls.forEach((url, index) => {
+            setTimeout(() => {
+                window.open(url, '_blank');
+            }, index * 100); // 每个链接间隔100毫秒
         });
         
         // 显示成功信息
