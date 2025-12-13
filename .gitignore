@@ -34,5 +34,3 @@ node_modules/
 .cache/
 .temp/
 
-# 原始Chrome扩展文件
-Extension/
