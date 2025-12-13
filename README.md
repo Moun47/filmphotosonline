@@ -45,11 +45,8 @@
 ## 项目结构
 
 ```
-├── Extension/              # 原始Chrome扩展文件
-│   ├── background.js       # 扩展后台脚本
-│   ├── douban_photo_urls.txt  # 豆瓣剧照链接列表
-│   ├── icon*.png           # 扩展图标
-│   └── manifest.json       # 扩展配置文件
+├── Extension/              # 原始Chrome扩展文件（不包含在git仓库中）
+│   └── douban_photo_urls.txt  # 豆瓣剧照链接列表
 ├── index.html              # 静态网页主文件
 ├── style.css               # 样式文件
 ├── script.js               # JavaScript逻辑
