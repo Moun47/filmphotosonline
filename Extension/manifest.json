@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "随机豆瓣剧照",
+  "version": "1.1",
+  "description": "点击图标或按快捷键随机打开豆瓣剧照页面",
+  "permissions": ["tabs"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    },
+    "default_title": "随机豆瓣剧照"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["douban_photo_urls.txt"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "commands": {
+    "open-random-photo": {
+      "suggested_key": {
+        "default": "Alt+Shift+D",
+        "mac": "Alt+Shift+D"
+      },
+      "description": "随机打开豆瓣剧照页面"
+    }
+  }
+}
