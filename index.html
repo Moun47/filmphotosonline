@@ -13,8 +13,11 @@
         
         <div class="settings">
             <label for="count">打开数量:</label>
-            <input type="number" id="count" min="1" max="10" value="1">
-            <span class="hint">(1-10个)</span>
+            <div class="number-input-container">
+                <button type="button" id="decreaseBtn" class="number-btn decrease">-</button>
+                <input type="number" id="count" min="1" value="1">
+                <button type="button" id="increaseBtn" class="number-btn increase">+</button>
+            </div>
         </div>
         
         <button id="openBtn">随机打开剧照</button>

@@ -9,10 +9,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 加载链接
     await loadUrls();
     
-    // 添加按钮点击事件
+    // 添加增减按钮事件监听器
+    const decreaseBtn = document.getElementById('decreaseBtn');
+    const increaseBtn = document.getElementById('increaseBtn');
+    const countInput = document.getElementById('count');
+    
+    decreaseBtn.addEventListener('click', () => {
+        let currentValue = parseInt(countInput.value) || 1;
+        if (currentValue > 1) {
+            countInput.value = currentValue - 1;
+        }
+    });
+    
+    increaseBtn.addEventListener('click', () => {
+        let currentValue = parseInt(countInput.value) || 1;
+        countInput.value = currentValue + 1;
+    });
+    
+    // 添加随机打开按钮点击事件
     openBtn.addEventListener('click', () => {
-        const countInput = document.getElementById('count');
-        const count = parseInt(countInput.value);
+        const count = parseInt(countInput.value) || 1;
         openRandomUrls(count);
     });
 });
@@ -71,9 +87,9 @@ function openRandomUrls(count) {
         return;
     }
     
-    // 验证数量范围
-    if (count < 1 || count > 10) {
-        status.textContent = '请输入1-10之间的数字';
+    // 确保数量至少为1
+    if (count < 1) {
+        status.textContent = '请输入至少为1的数字';
         status.className = 'status error';
         return;
     }

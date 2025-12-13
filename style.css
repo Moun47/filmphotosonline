@@ -51,14 +51,59 @@ p {
     font-size: 16px;
 }
 
+.number-input-container {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.number-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.number-btn:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.number-btn:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.number-btn:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6b4090 100%);
+}
+
+.number-btn:active {
+    transform: scale(0.95);
+}
+
 .settings input {
     width: 80px;
     padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
+    border: 2px solid #667eea;
+    border-left: none;
+    border-right: none;
     font-size: 16px;
     text-align: center;
     transition: border-color 0.3s ease;
+    height: 45px;
+}
+
+.settings input:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .settings input:focus {
