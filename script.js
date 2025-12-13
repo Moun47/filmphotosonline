@@ -37,14 +37,10 @@ async function loadUrls() {
         const data = await response.text();
         // 按行分割，并过滤掉空行
         doubanUrls = data.split('\n').filter(url => {
-            // 从每行中提取URL，格式为 "数字→URL"
-            const match = url.match(/^\d+→(https?:\/\/.+)$/);
-            return match && match[1].trim() !== '';
-        }).map(url => {
-            // 提取URL部分
-            const match = url.match(/^\d+→(https?:\/\/.+)$/);
-            return match[1];
-        });
+            // 匹配纯URL格式
+            url = url.trim();
+            return url !== '' && /^https?:\/\/.+/.test(url);
+        }).map(url => url.trim());
         
         status.textContent = `成功加载 ${doubanUrls.length} 个豆瓣剧照链接`;
         status.className = 'status success';
