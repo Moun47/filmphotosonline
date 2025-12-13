@@ -44,7 +44,7 @@ async function loadUrls() {
         status.textContent = '正在加载链接...';
         status.className = 'status success';
         
-        const response = await fetch('Extension/douban_photo_urls.txt');
+        const response = await fetch('douban_photo_urls.txt');
         
         if (!response.ok) {
             throw new Error(`HTTP错误! 状态码: ${response.status}`);
