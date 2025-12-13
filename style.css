@@ -39,82 +39,68 @@ p {
 .settings {
     margin-bottom: 30px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 10px;
-    flex-wrap: wrap;
 }
 
-.settings label {
+.count-label {
     color: #333;
     font-weight: bold;
     font-size: 16px;
+    text-align: center;
+    margin-bottom: 5px;
 }
 
 .number-input-container {
     display: flex;
     align-items: center;
-    gap: 0;
+    gap: 10px;
+    position: relative;
 }
 
 .number-btn {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    padding: 10px;
-    font-size: 18px;
+    border-radius: 20px;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     width: 40px;
-    height: 45px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.number-btn:first-child {
-    border-radius: 8px 0 0 8px;
-}
-
-.number-btn:last-child {
-    border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
 }
 
 .number-btn:hover {
-    background: linear-gradient(135deg, #5a6fd8 0%, #6b4090 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
 .number-btn:active {
-    transform: scale(0.95);
+    transform: translateY(0);
 }
 
 .settings input {
-    width: 80px;
-    padding: 10px;
-    border: 2px solid #667eea;
-    border-left: none;
-    border-right: none;
-    font-size: 16px;
+    width: 100px;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 18px;
     text-align: center;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
     height: 45px;
-}
-
-.settings input:focus {
-    outline: none;
-    box-shadow: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .settings input:focus {
     outline: none;
     border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.settings .hint {
-    color: #999;
-    font-size: 14px;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 button {
