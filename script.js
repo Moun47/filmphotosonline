@@ -5,6 +5,9 @@ let isLoading = false;
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', async () => {
     const openBtn = document.getElementById('openBtn');
+    const aboutBtn = document.getElementById('aboutBtn');
+    const modal = document.getElementById('aboutModal');
+    const closeBtn = document.getElementsByClassName('close')[0];
     
     // 加载链接
     await loadUrls();
@@ -12,6 +15,30 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 添加随机打开按钮点击事件
     openBtn.addEventListener('click', () => {
         openRandomUrl();
+    });
+    
+    // 添加关于按钮点击事件
+    aboutBtn.addEventListener('click', () => {
+        modal.style.display = 'block';
+    });
+    
+    // 添加关闭按钮点击事件
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+    
+    // 点击弹窗外部关闭弹窗
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+    
+    // 按下ESC键关闭弹窗
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+        }
     });
 });
 
