@@ -8,12 +8,65 @@
 </head>
 <body>
     <div class="container">
-        <h1>随机豆瓣剧照</h1>
-        <p>点击按钮随机打开豆瓣电影剧照页面</p>
+        <h1>随机豆瓣电影</h1>
+        <p>点击按钮随机打开豆瓣电影页面</p>
         
         <button id="aboutBtn" class="about-btn">项目说明</button>
         
-        <button id="openBtn">随机打开剧照</button>
+        <!-- 链接类型选择 -->
+        <div class="settings">
+            <h3>选择链接类型</h3>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="linkType" value="photos" checked>
+                    <span>剧照页面</span>
+                </label>
+                <label>
+                    <input type="radio" name="linkType" value="movie">
+                    <span>电影初始页面</span>
+                </label>
+            </div>
+        </div>
+        
+        <!-- 评分筛选 -->
+        <div class="settings">
+            <h3>评分区间</h3>
+            <div class="range-inputs">
+                <div class="range-item">
+                    <label for="minRating">最低评分:</label>
+                    <input type="number" id="minRating" min="0" max="10" step="0.1" value="0">
+                </div>
+                <div class="range-item">
+                    <label for="maxRating">最高评分:</label>
+                    <input type="number" id="maxRating" min="0" max="10" step="0.1" value="10">
+                </div>
+            </div>
+        </div>
+        
+        <!-- 评价人数筛选 -->
+        <div class="settings">
+            <h3>评价人数</h3>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="reviewLevel" value="all" checked>
+                    <span>全部</span>
+                </label>
+                <label>
+                    <input type="radio" name="reviewLevel" value="hundred">
+                    <span>百人评价</span>
+                </label>
+                <label>
+                    <input type="radio" name="reviewLevel" value="thousand">
+                    <span>千人评价</span>
+                </label>
+                <label>
+                    <input type="radio" name="reviewLevel" value="tenThousand">
+                    <span>万人评价</span>
+                </label>
+            </div>
+        </div>
+        
+        <button id="openBtn">随机打开</button>
         
         <div class="status" id="status"></div>
     </div>

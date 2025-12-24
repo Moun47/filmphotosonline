@@ -1,5 +1,5 @@
-// 存储豆瓣剧照链接的数组
-let doubanUrls = [];
+// 存储电影数据的数组
+let movies = [];
 let isLoading = false;
 
 // 页面加载完成后初始化
@@ -9,12 +9,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const modal = document.getElementById('aboutModal');
     const closeBtn = document.getElementsByClassName('close')[0];
     
-    // 加载链接
-    await loadUrls();
+    // 加载电影数据
+    await loadMovies();
     
     // 添加随机打开按钮点击事件
     openBtn.addEventListener('click', () => {
-        openRandomUrl();
+        openRandomMovie();
     });
     
     // 添加关于按钮点击事件
@@ -42,32 +42,62 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 });
 
-// 加载豆瓣剧照链接
-async function loadUrls() {
+// 解析评价人数文本，返回实际数字
+function parseReviewCount(reviewText) {
+    // 提取数字部分
+    const match = reviewText.match(/(\d+(?:,\d+)*)/);
+    if (match) {
+        return parseInt(match[0].replace(/,/g, ''));
+    }
+    return 0;
+}
+
+// 加载电影数据
+async function loadMovies() {
     const status = document.getElementById('status');
     
     if (isLoading) return;
     isLoading = true;
     
     try {
-        status.textContent = '正在加载链接...';
+        status.textContent = '正在加载电影数据...';
         status.className = 'status success';
         
-        const response = await fetch('douban_photo_urls.txt');
+        const response = await fetch('movie_info.csv');
         
         if (!response.ok) {
             throw new Error(`HTTP错误! 状态码: ${response.status}`);
         }
         
         const data = await response.text();
-        // 按行分割，并过滤掉空行
-        doubanUrls = data.split('\n').filter(url => {
-            // 匹配纯URL格式
-            url = url.trim();
-            return url !== '' && /^https?:\/\/.+/.test(url);
-        }).map(url => url.trim());
         
-        status.textContent = `成功加载 ${doubanUrls.length} 个豆瓣剧照链接`;
+        // 解析CSV数据
+        const lines = data.split('\n');
+        movies = [];
+        
+        // 跳过表头行
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (line === '') continue;
+            
+            const [movieId, movieLink, photoLink, rating, reviewCount] = line.split(',');
+            
+            // 解析评分和评价人数
+            const parsedRating = parseFloat(rating);
+            const parsedReviewCount = parseReviewCount(reviewCount);
+            
+            if (!isNaN(parsedRating) && parsedReviewCount >= 0) {
+                movies.push({
+                    movieId,
+                    movieLink,
+                    photoLink,
+                    rating: parsedRating,
+                    reviewCount: parsedReviewCount
+                });
+            }
+        }
+        
+        status.textContent = `成功加载 ${movies.length} 部电影数据`;
         status.className = 'status success';
         
         // 3秒后隐藏成功信息
@@ -76,22 +106,74 @@ async function loadUrls() {
         }, 3000);
         
     } catch (error) {
-        console.error('加载豆瓣剧照链接失败:', error);
-        status.textContent = `加载链接失败: ${error.message}`;
+        console.error('加载电影数据失败:', error);
+        status.textContent = `加载数据失败: ${error.message}`;
         status.className = 'status error';
     } finally {
         isLoading = false;
     }
 }
 
-// 随机打开一个链接
-function openRandomUrl() {
+// 根据用户选择获取筛选条件
+function getFilterOptions() {
+    // 获取链接类型
+    const linkType = document.querySelector('input[name="linkType"]:checked').value;
+    
+    // 获取评分区间
+    const minRating = parseFloat(document.getElementById('minRating').value);
+    const maxRating = parseFloat(document.getElementById('maxRating').value);
+    
+    // 获取评价人数筛选
+    const reviewLevel = document.querySelector('input[name="reviewLevel"]:checked').value;
+    
+    return {
+        linkType,
+        minRating,
+        maxRating,
+        reviewLevel
+    };
+}
+
+// 根据筛选条件过滤电影
+function filterMovies(options) {
+    let filtered = [...movies];
+    
+    // 按评分筛选
+    filtered = filtered.filter(movie => 
+        movie.rating >= options.minRating && movie.rating <= options.maxRating
+    );
+    
+    // 按评价人数筛选
+    switch (options.reviewLevel) {
+        case 'hundred':
+            // 百人评价（100-999人）
+            filtered = filtered.filter(movie => movie.reviewCount >= 100 && movie.reviewCount < 1000);
+            break;
+        case 'thousand':
+            // 千人评价（1000-9999人）
+            filtered = filtered.filter(movie => movie.reviewCount >= 1000 && movie.reviewCount < 10000);
+            break;
+        case 'tenThousand':
+            // 万人评价（10000人以上）
+            filtered = filtered.filter(movie => movie.reviewCount >= 10000);
+            break;
+        case 'all':
+        default:
+            // 全部
+            break;
+    }
+    
+    return filtered;
+}
+
+// 随机打开一个电影
+function openRandomMovie() {
     const status = document.getElementById('status');
     const openBtn = document.getElementById('openBtn');
     
-    // 验证链接是否已加载
-    if (doubanUrls.length === 0) {
-        status.textContent = '链接未加载，请稍后重试';
+    // 验证电影数据是否已加载
+    if (movies.length === 0) {
+        status.textContent = '电影数据未加载，请稍后重试';
         status.className = 'status error';
         return;
     }
@@ -100,19 +182,35 @@ function openRandomUrl() {
     openBtn.disabled = true;
     
     try {
-        // 随机选择一个链接
-        const randomIndex = Math.floor(Math.random() * doubanUrls.length);
-        const randomUrl = doubanUrls[randomIndex];
+        // 获取筛选条件
+        const filterOptions = getFilterOptions();
+        
+        // 根据筛选条件过滤电影
+        const filteredMovies = filterMovies(filterOptions);
+        
+        if (filteredMovies.length === 0) {
+            status.textContent = '当前筛选条件下无电影数据，请调整筛选条件';
+            status.className = 'status error';
+            return;
+        }
+        
+        // 随机选择一个电影
+        const randomIndex = Math.floor(Math.random() * filteredMovies.length);
+        const selectedMovie = filteredMovies[randomIndex];
+        
+        // 根据选择的链接类型打开对应页面
+        const url = filterOptions.linkType === 'photos' ? selectedMovie.photoLink : selectedMovie.movieLink;
         
         // 在新标签页中打开链接
-        window.open(randomUrl, '_blank');
+        window.open(url, '_blank');
         
         // 显示成功信息
-        status.textContent = '已成功打开随机剧照页面';
+        const linkTypeText = filterOptions.linkType === 'photos' ? '剧照页面' : '电影初始页面';
+        status.textContent = `已成功打开随机${linkTypeText}`;
         status.className = 'status success';
         
     } catch (error) {
-        console.error('打开链接失败:', error);
+        console.error('打开电影失败:', error);
         status.textContent = `打开链接失败: ${error.message}`;
         status.className = 'status error';
     } finally {
