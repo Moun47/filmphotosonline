@@ -43,12 +43,15 @@
 ## 项目结构
 
 ```
-├── douban_photo_urls.txt   # 豆瓣剧照链接列表
-├── index.html              # 静态网页主文件
-├── style.css               # 样式文件
-├── script.js               # JavaScript逻辑
-├── .gitignore              # Git忽略文件
-└── README.md               # 项目说明
+├── all_douban_photo_urls.txt   # 完整豆瓣剧照链接列表
+├── douban_photo_urls.txt        # 豆瓣剧照链接列表
+├── douban_api_crawler.py        # 豆瓣API爬虫脚本
+├── movie_info.csv               # 电影信息CSV文件
+├── index.html                   # 静态网页主文件
+├── style.css                    # 样式文件
+├── script.js                    # JavaScript逻辑
+├── .gitignore                   # Git忽略文件
+└── README.md                    # 项目说明
 ```
 
 ## 技术实现
@@ -60,7 +63,7 @@
 
 ## 注意事项
 
-- 确保`douban_photo_urls.txt`文件位于`Extension`目录下
+- 确保`douban_photo_urls.txt`文件位于项目根目录下
 - 网站需要在HTTP服务器环境下运行，直接打开HTML文件可能会遇到跨域问题
 - GitHub Pages部署后，访问链接可能需要几分钟时间生效
 

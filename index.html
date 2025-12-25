@@ -33,11 +33,9 @@
             <h3>评分区间</h3>
             <div class="range-inputs">
                 <div class="range-item">
-                    <label for="minRating">最低评分:</label>
                     <input type="number" id="minRating" min="0" max="10" step="0.1" value="0">
                 </div>
                 <div class="range-item">
-                    <label for="maxRating">最高评分:</label>
                     <input type="number" id="maxRating" min="0" max="10" step="0.1" value="10">
                 </div>
             </div>
@@ -46,24 +44,23 @@
         <!-- 评价人数筛选 -->
         <div class="settings">
             <h3>评价人数</h3>
-            <div class="radio-group">
-                <label>
-                    <input type="radio" name="reviewLevel" value="all" checked>
+            <div class="slider-container">
+                <!-- 移除了评价人数显示 -->
+                <div class="slider-wrapper single-slider">
+                    <input type="range" id="reviewLevelSlider" min="0" max="5" step="1" value="0" class="slider">
+                    <div class="slider-track"></div>
+                    <div class="slider-thumb"></div>
+                </div>
+                <div class="slider-labels">
                     <span>全部</span>
-                </label>
-                <label>
-                    <input type="radio" name="reviewLevel" value="hundred">
-                    <span>百人评价</span>
-                </label>
-                <label>
-                    <input type="radio" name="reviewLevel" value="thousand">
-                    <span>千人评价</span>
-                </label>
-                <label>
-                    <input type="radio" name="reviewLevel" value="tenThousand">
-                    <span>万人评价</span>
-                </label>
+                    <span>百人</span>
+                    <span>千人</span>
+                    <span>万人</span>
+                    <span>十万人</span>
+                    <span>百万人</span>
+                </div>
             </div>
+
         </div>
         
         <button id="openBtn">随机打开</button>

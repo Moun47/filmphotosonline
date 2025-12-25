@@ -52,45 +52,11 @@ p {
     font-weight: bold;
 }
 
-/* 单选按钮组 */
-.radio-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.radio-group label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 16px;
-    color: #555;
-    transition: all 0.2s ease;
-}
-
-.radio-group input[type="radio"] {
-    margin-right: 10px;
-    transform: scale(1.2);
-}
-
-.radio-group label:hover {
-    color: #667eea;
-}
-
-.radio-group span {
-    transition: color 0.2s ease;
-}
-
-.radio-group input[type="radio"]:checked + span {
-    color: #667eea;
-    font-weight: bold;
-}
-
 /* 范围输入 */
 .range-inputs {
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    gap: 15px;
+    flex-wrap: nowrap;
 }
 
 .range-item {
@@ -98,7 +64,7 @@ p {
     flex-direction: column;
     gap: 5px;
     flex: 1;
-    min-width: 120px;
+    min-width: 100px;
 }
 
 .range-item label {
@@ -119,6 +85,128 @@ p {
     outline: none;
     border-color: #667eea;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* 滑块容器 */
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 滑块信息显示 */
+.slider-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #666;
+    font-weight: bold;
+}
+
+/* 滑块包装器 */
+.slider-wrapper.single-slider {
+    position: relative;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+/* 滑块轨道 */
+.slider-track {
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    z-index: 1;
+}
+
+/* 滑块样式 */
+.slider {
+    position: absolute;
+    width: 100%;
+    height: 6px;
+    background: transparent;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    z-index: 3;
+    cursor: pointer;
+}
+
+/* 单选按钮样式 */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 8px;
+    accent-color: #667eea;
+    transform: scale(1.1);
+}
+
+.radio-group span {
+    margin-left: 0;
+}
+
+/* WebKit滑块样式 */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 3px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    transition: all 0.2s ease;
+    z-index: 4;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.slider::-webkit-slider-thumb:active {
+    transform: scale(1.1);
+}
+
+/* Firefox滑块样式 */
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 3px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    transition: all 0.2s ease;
+}
+
+.slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* 滑块标签 */
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
 }
 
 /* 调整按钮样式 */
@@ -292,12 +380,21 @@ button:disabled {
     }
     
     .settings {
-        flex-direction: column;
         gap: 15px;
     }
     
-    .settings input {
-        width: 100px;
+    .range-inputs {
+        gap: 10px;
+    }
+    
+    .range-item {
+        min-width: 80px;
+    }
+    
+    .range-item input {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
     }
     
     .about-btn {
