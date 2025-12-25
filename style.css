@@ -130,6 +130,7 @@ p {
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    appearance: none;
     z-index: 3;
     cursor: pointer;
 }
