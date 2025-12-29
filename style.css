@@ -6,13 +6,41 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
+    position: relative;
+    overflow: hidden;
 }
+
+/* 动态海报背景容器 */
+.poster-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    padding: 0;
+}
+
+/* 单个海报样式 - 允许重叠的交错效果 */
+.poster-item {
+    position: absolute;
+    width: 150px;
+    height: 225px;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.85;
+    transition: transform 0.3s ease;
+    /* 允许海报之间重叠 */
+    z-index: var(--z-index, 1);
+}
+
+/* 移除紫色叠加层，直接显示海报背景 */
 
 .container {
     background: white;

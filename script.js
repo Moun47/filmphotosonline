@@ -74,12 +74,130 @@ async function loadMovies() {
     }
 }
 
+// 所有海报图片路径
+const posterImages = [
+    'posters/p1055645725.webp',
+    'posters/p1271999126.webp',
+    'posters/p1883551035.webp',
+    'posters/p1910931622.webp',
+    'posters/p1957625869.webp',
+    'posters/p2071123198.webp',
+    'posters/p2163659004.webp',
+    'posters/p2166127561.webp',
+    'posters/p2173386253.webp',
+    'posters/p2178390974.webp',
+    'posters/p2194480884.webp',
+    'posters/p2195566148.webp',
+    'posters/p2201353791.webp',
+    'posters/p2206737207.webp',
+    'posters/p2215102596.webp',
+    'posters/p2215886505.webp',
+    'posters/p2235626712.webp',
+    'posters/p2236812017.webp',
+    'posters/p2238784204.webp',
+    'posters/p2245482010.webp',
+    'posters/p2247672271.webp',
+    'posters/p2248676081.webp',
+    'posters/p2253641357.webp',
+    'posters/p2256401986.webp',
+    'posters/p2263287670.webp',
+    'posters/p2263553175.webp',
+    'posters/p2312758560.webp',
+    'posters/p2321431402.webp',
+    'posters/p2339055762.webp',
+    'posters/p2350715785.webp',
+    'posters/p2402012821.webp',
+    'posters/p2418455758.webp',
+    'posters/p2440233036.webp',
+    'posters/p2458406632.webp',
+    'posters/p2490948849.webp',
+    'posters/p2501068908.webp',
+    'posters/p2518080782.webp',
+    'posters/p2518558081.webp',
+    'posters/p2528293957.webp',
+    'posters/p2533924212.webp',
+    'posters/p2538061000.webp',
+    'posters/p2549768986.webp',
+    'posters/p2553104888.webp',
+    'posters/p2558022335.webp',
+    'posters/p2560052923.webp',
+    'posters/p2565039399.webp',
+    'posters/p2573433510.webp',
+    'posters/p2614234255.webp',
+    'posters/p2630100110.webp',
+    'posters/p2654612159.webp',
+    'posters/p2873818227.webp',
+    'posters/p2880793132.webp',
+    'posters/p2893820209.webp',
+    'posters/p2897796275.webp',
+    'posters/p2914293980.webp',
+    'posters/p2914698334.webp',
+    'posters/p2922238175.webp',
+    'posters/p2923749086.webp',
+    'posters/p456703618.webp',
+    'posters/p788737850.webp',
+    'posters/p983398708.webp',
+    'posters/V-for-Vendetta_poster_goldposter_com_31.webp'
+];
+
+// 生成海报背景 - 重叠交错效果
+function generatePosterBackground() {
+    const posterBackground = document.getElementById('posterBackground');
+    if (!posterBackground) return;
+    
+    // 清空现有内容
+    posterBackground.innerHTML = '';
+    
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const totalPosters = 100; // 生成100张海报，确保密集覆盖
+    
+    // 生成海报元素
+    for (let i = 0; i < totalPosters; i++) {
+        // 随机选择一张海报
+        const randomPoster = posterImages[Math.floor(Math.random() * posterImages.length)];
+        
+        // 创建海报元素
+        const posterItem = document.createElement('div');
+        posterItem.className = 'poster-item';
+        posterItem.style.backgroundImage = `url(${randomPoster})`;
+        
+        // 1. 随机位置：允许海报超出屏幕边缘，确保完全覆盖
+        const randomX = Math.random() * (windowWidth + 300) - 150; // -150px 到 windowWidth + 150px
+        const randomY = Math.random() * (windowHeight + 450) - 225; // -225px 到 windowHeight + 225px
+        posterItem.style.left = `${randomX}px`;
+        posterItem.style.top = `${randomY}px`;
+        
+        // 2. 随机旋转角度（-5到5度）
+        const randomRotate = (Math.random() - 0.5) * 10;
+        
+        // 3. 随机缩放（0.8到1.1倍）
+        const randomScale = 0.8 + Math.random() * 0.3;
+        
+        // 4. 组合变换效果
+        posterItem.style.transform = `rotate(${randomRotate}deg) scale(${randomScale})`;
+        
+        // 5. 随机z-index，允许海报重叠
+        const randomZIndex = Math.floor(Math.random() * 10);
+        posterItem.style.setProperty('--z-index', randomZIndex);
+        
+        // 添加到背景容器
+        posterBackground.appendChild(posterItem);
+    }
+}
+
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', async () => {
     const openBtn = document.getElementById('openBtn');
     const aboutBtn = document.getElementById('aboutBtn');
     const modal = document.getElementById('aboutModal');
     const closeBtn = document.getElementsByClassName('close')[0];
+    
+    // 生成海报背景
+    generatePosterBackground();
+    
+    // 监听窗口大小变化，重新生成海报背景
+    window.addEventListener('resize', generatePosterBackground);
     
     // 加载电影数据
     await loadMovies();
