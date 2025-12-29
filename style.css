@@ -7,12 +7,9 @@
 body {
     font-family: 'Arial', sans-serif;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 20px;
     position: relative;
-    overflow: hidden;
+    overflow: auto;
 }
 
 /* 动态海报背景容器 */
@@ -50,6 +47,7 @@ body {
     text-align: center;
     max-width: 400px;
     width: 100%;
+    margin: 0 auto;
 }
 
 h1 {
