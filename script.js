@@ -148,8 +148,14 @@ function generatePosterBackground() {
     // 清空现有内容
     posterBackground.innerHTML = '';
     
+    // 获取当前窗口尺寸，用于固定背景大小
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
+    
+    // 固定背景容器尺寸，不随窗口变化
+    posterBackground.style.width = `${windowWidth}px`;
+    posterBackground.style.height = `${windowHeight}px`;
+    
     const totalPosters = 100; // 生成100张海报，确保密集覆盖
     
     // 生成海报元素
@@ -195,9 +201,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // 生成海报背景
     generatePosterBackground();
-    
-    // 监听窗口大小变化，重新生成海报背景
-    window.addEventListener('resize', generatePosterBackground);
     
     // 加载电影数据
     await loadMovies();
